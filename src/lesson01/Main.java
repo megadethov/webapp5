@@ -1,4 +1,4 @@
-package main;
+package lesson01;
 
 /**
  * Created by mega on 13.05.2016.
