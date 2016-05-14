@@ -8,6 +8,10 @@ import ru.javawebinar.webapp.model.Link;
 public class Main {
     public static void main(String[] args) {
         Link l = new Link("javaWebinar", "javawebinar.ru");
-        System.out.println(l);
+        Link l2 = l;
+        Link l3 = new Link(l); // copy constructor
+        System.out.println(l.equals(l2));  // true
+        System.out.println(l.equals(l3));  // false    // after overriding - true
+        System.out.println(l.getClass()); // метод класса Object, к-ый возвращает имя класса из к-го произв. инстанс
     }
 }
