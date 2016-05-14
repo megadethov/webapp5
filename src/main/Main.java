@@ -5,9 +5,12 @@ package main;
  */
 public class Main {
     public static void main(String[] args) {
-        System.out.printf("Hello %s! ", args[0]);
-        Car car = new Car();
-        car.go();
+        System.out.printf("Hello %s!\n", args[0]);
+        Car raceCar = new RaceCar();
+        Car simpleCar = new SimpleCar();
+        raceCar.getDescribe();
+        simpleCar.setSpeed(200);
+        simpleCar.getDescribe();
     }
 
 }

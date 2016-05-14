@@ -3,10 +3,12 @@ package main;
 /**
  * Created by mega on 14.05.2016.
  */
-public class Car {
-    int speed  = 100;
+public interface Car {
+    int getSpeed();
 
-    void go() {
-        System.out.println("Go at speed " + speed);
-    }
+    void setSpeed(int speed);
+
+    void getDescribe();
+
+    float getEngineVolume();
 }
