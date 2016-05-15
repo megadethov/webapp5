@@ -4,18 +4,29 @@ package ru.javawebinar.webapp.model;
  * Created by mega on 14.05.2016.
  */
 public class Link {
+
+    public static Link EMPTY = new Link(); // пустой объект c конструктором по умолчанию
+
     private final String name;
     private final String url;
+
+    // конструктор по умолчанию создает пустой объект (name = "", url = null)
+    public Link() {
+        this("", null);
+    }
+
+    // copy constructor
+    public Link(Link link) {
+        this(link.name, link.url);
+    }
 
     public Link(String name, String url) {
         this.name = name;
         this.url = url;
     }
-
-    // copy constructor
-    public Link(Link link) {
-        this.name = link.name;
-        this.url = link.url;
+ // метод для доступа к статик полю EMPTY
+    public static Link empty() {
+        return EMPTY;
     }
 
     @Override
