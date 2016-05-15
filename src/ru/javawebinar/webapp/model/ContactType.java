@@ -4,7 +4,7 @@ package ru.javawebinar.webapp.model;
  * Created by mega on 15.05.2016.
  */
 public enum ContactType {
-    PHON("Тел."),
+    PHONE("Тел."),
     MOBILE("Мобильный"),
     HOME_PHONE("Домашний тел."),
     SKYPE("Skype"),
