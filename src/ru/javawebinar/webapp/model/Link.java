@@ -24,7 +24,16 @@ public class Link {
         this.name = name;
         this.url = url;
     }
- // метод для доступа к статик полю EMPTY
+
+    public String getName() {
+        return name;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    // метод для доступа к статик полю EMPTY
     public static Link empty() {
         return EMPTY;
     }
