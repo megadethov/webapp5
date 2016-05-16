@@ -21,5 +21,26 @@ public class Main {
         Link link = new Link("bla-bla", "URL12");
         System.out.println(f.get(link)); // URL12
 
+        System.out.println(link instanceof Link); // true (not recommend to use - polymorphism better)
+        System.out.println(Link.class.isInstance(link)); // true analog instanceof
+
+        String str = "Ja" + "va";
+        String str2 = "Java";
+        System.out.println(str == str2); // true (JVM use String constant internal pool)
+
+        // BAD practice (a lot of new String object - on each loop)
+        String fill = "";
+        for (int i = 0; i < 10; i++) {
+            fill += "A";
+        }
+        System.out.println(fill); // AAAAAAAAAA
+
+        // GOOD practice use StringBuilder / StringBuffer ( one String object - on all loops)
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < 10; i++) {
+            sb.append('B');
+        }
+        System.out.println(sb.toString()); // BBBBBBBBBB
     }
 }
