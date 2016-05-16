@@ -11,7 +11,7 @@ public class ArrayStorage implements IStorage {
 
     @Override
     public void clear() {
-        
+
     }
 
     @Override
