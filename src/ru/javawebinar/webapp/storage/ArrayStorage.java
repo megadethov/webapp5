@@ -9,14 +9,29 @@ import java.util.Collection;
  */
 public class ArrayStorage implements IStorage {
 
+    private static final int LIMIT = 100;
+    private Resume[] arr = new Resume[LIMIT];
+
     @Override
     public void clear() {
-
+        for (int i = 0; i < LIMIT; i++) {
+            arr[i] = null;
+        }
     }
 
     @Override
     public void save(Resume r) {
+        for (int i = 0; i < LIMIT; i++) {
+            if (arr[i] == null) {
+                arr[i] = r;
+                break;
+            } else {
+                if (arr[i].equals(r)) {
+                    throw new IllegalStateException("Already exists");
+                }
 
+            }
+        }
     }
 
     @Override
@@ -31,6 +46,13 @@ public class ArrayStorage implements IStorage {
 
     @Override
     public void delete(String uuid) {
+        for (int i = 0; i < LIMIT; i++) {
+            if (arr[i].getUuid() == uuid) {
+                arr[i] = null;
+            } else {
+                throw new IllegalStateException("Nothing to delete");
+            }
+        }
 
     }
 
