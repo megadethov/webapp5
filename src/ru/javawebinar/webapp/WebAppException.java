@@ -5,7 +5,7 @@ import ru.javawebinar.webapp.model.Resume;
 /**
  * Created by mega on 17.05.2016.
  */
-public class WebAppException extends Exception {
+public class WebAppException extends RuntimeException {
     private Resume resume = null;
     private String uuid = null;
 

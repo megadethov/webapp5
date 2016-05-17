@@ -1,5 +1,6 @@
 package ru.javawebinar.webapp.storage;
 
+import ru.javawebinar.webapp.WebAppException;
 import ru.javawebinar.webapp.model.Resume;
 
 import java.util.Collection;
@@ -9,7 +10,7 @@ import java.util.Collection;
  */
 public interface IStorage {
     void clear(); // cleaning storage (for JUnit)
-    void save(Resume r); // CRUD - create
+    void save(Resume r) throws WebAppException; // CRUD - create
     void update(Resume r); // CRUD - update
     Resume load(String uuid); // CRUD - read (from storage)
     void delete(String uuid); // CRUD - delete
