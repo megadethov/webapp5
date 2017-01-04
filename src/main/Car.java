@@ -1,17 +1,9 @@
 package main;
 
-public class Car {
-   private int speed = 100;
+public interface Car {
+    void setSpeed(int speed);
 
-    void go() {
-        System.out.println("Go with speed " + speed);
-    }
+    int getSpeed();
 
-    public int getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
+    void go();
 }
