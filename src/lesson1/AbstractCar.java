@@ -1,4 +1,4 @@
-package main;
+package lesson1;
 
 public abstract class AbstractCar implements Car {
     protected int speed = 100;

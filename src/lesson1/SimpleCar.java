@@ -1,4 +1,4 @@
-package main;
+package lesson1;
 
 public class SimpleCar extends AbstractCar {
     @Override
