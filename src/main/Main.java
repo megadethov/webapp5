@@ -2,11 +2,10 @@ package main;
 
 public class Main {
     public static void main(String[] args) {
-        Car car = new CarImpl();
-        car.go();
+        Car raceCar = new RaceCar();
+        raceCar.getDescription();
 
-        Car car2 = new CarImpl();
-        car2.setSpeed(200);
-        car2.go();
+        Car simpleCar = new SimpleCar();
+        simpleCar.getDescription();
     }
 }

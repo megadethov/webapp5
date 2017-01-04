@@ -5,5 +5,7 @@ public interface Car {
 
     int getSpeed();
 
-    void go();
+    void getDescription();
+
+    float getEngineVolume();
 }
