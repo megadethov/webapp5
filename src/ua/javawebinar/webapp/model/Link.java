@@ -1,6 +1,8 @@
 package ua.javawebinar.webapp.model;
 
 public class Link {
+    private static Link EMPTY = new Link();
+
     private final String name;
     private final String url;
 
@@ -13,6 +15,14 @@ public class Link {
     public Link (Link link) {
         this.name = link.name;
         this.url = link.url;
+    }
+
+    public Link() {
+        this("", null);
+    }
+
+    public static Link getEMPTY() {
+        return EMPTY;
     }
 
     @Override
