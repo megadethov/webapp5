@@ -1,5 +1,5 @@
 package ua.javawebinar.webapp.model;
 
 public class Section {
-    SectionType type;
+  protected   SectionType type;
 }
