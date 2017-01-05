@@ -3,12 +3,15 @@ package lesson3;
 import ua.javawebinar.webapp.model.Link;
 import ua.javawebinar.webapp.model.Resume;
 
+import java.util.Arrays;
+
 public class ArrayMain {
     public static void main(String[] args) {
 //        int[] arr = new int[]{1, 2, 3};
         int[] arr = {1, 2, 3};
         System.out.println(arr.getClass());
         System.out.println(arr.length);
+        System.out.println(Arrays.toString(arr));
 
         Resume[] resumes = new Resume[10];
         System.out.println(resumes.getClass());
