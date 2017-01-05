@@ -1,10 +1,16 @@
 package ua.javawebinar.webapp.model;
 
 public enum  ContactType {
-    PHONE,
-    MOBILE,
-    HOME_PHONE,
-    SKYPE,
-    MAIL,
-    ICQ
+    PHONE("Тел."),
+    MOBILE("Мобильный"),
+    HOME_PHONE("Доиашний тел."),
+    SKYPE("Skype"),
+    MAIL("Почта"),
+    ICQ("ICQ");
+
+    private String title;
+
+    ContactType(String title) {
+        this.title = title;
+    }
 }
