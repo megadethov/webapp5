@@ -27,6 +27,27 @@ public class Main {
         Field field = Link.class.getDeclaredField("url");
         field.setAccessible(true);
         System.out.println(field.get(l));
-    }
 
+        System.out.println(l instanceof Link); // true
+        System.out.println(Link.class.isInstance(l)); // true
+
+        // String pool
+        String a = "Ja" + "va";
+        String a2 = "Java";
+        System.out.println(a == a2); // true
+
+        // bad practice
+        String str = "";
+        for (int i = 0; i < 10; i++) { // creating 10 objects
+            str += "a";
+        }
+        System.out.println(str);
+
+        // good practice
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < 10; i++) { // create 1 object
+            builder.append("a");
+        }
+        System.out.println(builder.toString());
+    }
 }
