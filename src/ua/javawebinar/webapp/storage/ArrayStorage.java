@@ -6,7 +6,7 @@ import java.util.Collection;
 
 // TODO: 05.01.2017 Implements all methods 
 public class ArrayStorage implements IStorage {
-    private Resume[] array;
+    private Resume[] array = new Resume[100];
 
     @Override
     public void clear() {
