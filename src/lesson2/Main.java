@@ -8,6 +8,7 @@ public class Main {
         Link link2 = link;
         System.out.println(link.equals(link2));
         Link link3 = new Link(link);
+        System.out.println(link.getClass().getClass());
         System.out.println(link.equals(link3));
 
     }
