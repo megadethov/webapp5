@@ -3,14 +3,11 @@ package ua.javawebinar.webapp.storage;
 import ua.javawebinar.webapp.WebAppException;
 import ua.javawebinar.webapp.model.Resume;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static java.util.Arrays.asList;
+//import java.util.logging.Level;
 
 public class ArrayStorage implements IStorage {
 
@@ -59,7 +56,7 @@ public class ArrayStorage implements IStorage {
         LOGGER.info("Load resume with uuid " + uuid);
         int idx = getIndex(uuid);
         if (idx == -1) {
-            throw new WebAppException("Resume " + uuid + "not exists");
+            throw new WebAppException("Resume " + uuid + " not exists");
         }
         return array[idx];
     }
@@ -85,7 +82,7 @@ public class ArrayStorage implements IStorage {
 
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     // поиск Резюме:
