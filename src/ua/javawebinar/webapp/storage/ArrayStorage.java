@@ -1,26 +1,54 @@
 package ua.javawebinar.webapp.storage;
 
+import ua.javawebinar.webapp.WebAppException;
 import ua.javawebinar.webapp.model.Resume;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-// TODO: 05.01.2017 Implements all methods 
 public class ArrayStorage implements IStorage {
-    private Resume[] array = new Resume[100];
+
+    private static final int LIMIT = 100;
+    private Resume[] array = new Resume[LIMIT];
+    private int size = 0;
+
+    //    protected Logger LOGGER = Logger.getLogger(this.getClass().getName()); // для базового класса с наследниками
+    private static Logger LOGGER = Logger.getLogger(ArrayStorage.class.getName()); // для конкретного класса без наследования
 
     @Override
     public void clear() {
-        
+        LOGGER.info("Delete all resumes");
+        Arrays.fill(array, null);
+        size = 0;
     }
 
     @Override
-    public void save(Resume resume) {
-
+    public void save(Resume resume) /*throws WebAppException*/ {
+        LOGGER.info("Save resume with uuid: " + resume.getUuid());
+        int idx = getIndex(resume.getUuid()); // ==-1 такого резюме в массиве нет
+        if (idx != -1) {
+           /* try {
+                throw new WebAppException("Resume " + resume.getUuid() + "already exists", resume);
+            } catch (WebAppException e) {
+                LOGGER.log(Level.SEVERE, e.getMessage(), e);
+                throw new IllegalStateException(e);
+            }*/
+            throw new WebAppException("Resume " + resume.getUuid() + "already exists", resume);
+        }
+        array[size++] = resume;
     }
 
     @Override
     public void update(Resume resume) {
-
+        LOGGER.info("Update resume with uuid " + resume.getUuid());
+        int idx = getIndex(resume.getUuid());
+        if (idx == -1) {
+            throw new WebAppException("Resume " + resume.getUuid() + "not exists", resume);
+        }
+        array[idx] = resume;
     }
 
     @Override
@@ -41,5 +69,19 @@ public class ArrayStorage implements IStorage {
     @Override
     public int size() {
         return 0;
+    }
+
+    // поиск Резюме:
+    // нет return -1
+    // есть return его индекс
+    private int getIndex(String uuid) {
+        for (int i = 0; i < LIMIT; i++) {
+            if (array[i] != null) {
+                if (array[i].getUuid().equals(uuid)) {
+                    return i;
+                }
+            }
+        }
+        return -1;
     }
 }
