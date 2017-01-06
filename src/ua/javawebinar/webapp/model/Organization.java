@@ -7,7 +7,7 @@ public class Organization {
     private Link link;
     private List<Period> periods;
 
-    public /*static*/ class Period { // static - nested, no static - inner
+    public static class Period { // static - nested, no static - inner
         private Date startDates;
         private Date sendDates;
         private String position;
@@ -21,7 +21,7 @@ public class Organization {
             this.sendDates = sendDates;
             this.position = position;
             this.content = content;
-            link.getName(); // из статика нет доступа к полям внешнего класса
+//            link.getName(); // из статика нет доступа к полям внешнего класса
         }
     }
 }
