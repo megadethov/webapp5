@@ -53,7 +53,12 @@ public class ArrayStorage implements IStorage {
 
     @Override
     public Resume load(String uuid) {
-        return null;
+       LOGGER.info("Load resume with uuid " + uuid);
+        int idx = getIndex(uuid);
+        if (idx == -1) {
+            throw new WebAppException("Resume " + uuid + "not exists");
+        }
+        return array[idx];
     }
 
     @Override
