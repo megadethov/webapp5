@@ -15,7 +15,7 @@ public class ArrayStorage implements IStorage {
     private Resume[] array = new Resume[LIMIT];
     private int size = 0;
 
-    //    protected Logger LOGGER = Logger.getLogger(this.getClass().getName()); // для базового класса с наследниками
+    //    protected Logger logger = Logger.getLogger(this.getClass().getName()); // для базового класса с наследниками
     private static Logger LOGGER = Logger.getLogger(ArrayStorage.class.getName()); // для конкретного класса без наследования
 
     @Override
@@ -33,7 +33,7 @@ public class ArrayStorage implements IStorage {
            /* try {
                 throw new WebAppException("Resume " + resume.getUuid() + "already exists", resume);
             } catch (WebAppException e) {
-                LOGGER.log(Level.SEVERE, e.getMessage(), e);
+                logger.log(Level.SEVERE, e.getMessage(), e);
                 throw new IllegalStateException(e);
             }*/
             throw new WebAppException("Resume " + resume.getUuid() + "already exists", resume);
