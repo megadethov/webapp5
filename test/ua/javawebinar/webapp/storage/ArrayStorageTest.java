@@ -11,7 +11,7 @@ import ua.javawebinar.webapp.model.Resume;
 
 import static org.junit.Assert.*;
 
-public class ArrayStorageTest {
+public class ArrayStorageTest extends AbstractStorageTest {
     private /*static*/ Resume R1, R2, R3;
 
     private ArrayStorage storage = new ArrayStorage();

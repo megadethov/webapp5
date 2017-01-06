@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class Resume implements Comparable<Resume>{
-    private String uuid;
+    private final String uuid;
     private String fullName;
     private String location;
     private String homePage;
@@ -53,10 +53,6 @@ public class Resume implements Comparable<Resume>{
 
     public List<Section> getSections() {
         return sections;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
     }
 
     public void setFullName(String fullName) {

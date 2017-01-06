@@ -4,8 +4,8 @@ import ua.javawebinar.webapp.model.Resume;
 
 import java.util.Collection;
 
-// TODO: 06.01.2017 Implements CollectionStorage
-public class CollectionStorage extends AbstractStorage {
+// TODO: 06.01.2017 Implements MapStorage
+public class MapStorage extends AbstractStorage {
     @Override
     public void clear() {
 
