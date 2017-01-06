@@ -3,11 +3,14 @@ package ua.javawebinar.webapp.storage;
 import ua.javawebinar.webapp.WebAppException;
 import ua.javawebinar.webapp.model.Resume;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static java.util.Arrays.asList;
 
 public class ArrayStorage implements IStorage {
 
@@ -53,7 +56,7 @@ public class ArrayStorage implements IStorage {
 
     @Override
     public Resume load(String uuid) {
-       LOGGER.info("Load resume with uuid " + uuid);
+        LOGGER.info("Load resume with uuid " + uuid);
         int idx = getIndex(uuid);
         if (idx == -1) {
             throw new WebAppException("Resume " + uuid + "not exists");
@@ -63,12 +66,21 @@ public class ArrayStorage implements IStorage {
 
     @Override
     public void delete(String uuid) {
-
+        LOGGER.info("Delete resume with uuid " + uuid);
+        int idx = getIndex(uuid);
+        if (idx == -1) {
+            throw new WebAppException("Resume " + uuid + "not exists");
+        }
+        if (idx != size) {
+            System.arraycopy(array, idx + 1, array, idx, size - idx);
+        }
+        array[--size] = null;
     }
 
     @Override
     public Collection<Resume> getAllSorted() {
-        return null;
+        Arrays.sort(array, 0, size);
+        return Arrays.asList(Arrays.copyOf(array, size));
     }
 
     @Override
