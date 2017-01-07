@@ -1,15 +1,13 @@
 package lesson3;
 
-import ua.javawebinar.webapp.model.Contact;
 import ua.javawebinar.webapp.model.ContactType;
 import ua.javawebinar.webapp.model.Link;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) throws IllegalAccessException, NoSuchFieldException {
-        Contact contact = new Contact(ContactType.PHONE, "555-55-55");
+//        Contact contact = new Contact(ContactType.PHONE, "555-55-55");
         ContactType contact2 = ContactType.ICQ;
         System.out.println(ContactType.ICQ == contact2);
 

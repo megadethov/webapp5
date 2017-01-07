@@ -1,16 +1,14 @@
 package ua.javawebinar.webapp.model;
 
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
-public class Resume implements Comparable<Resume>{
+public class Resume /*implements Comparable<Resume>*/{
     private String uuid;
     private String fullName;
     private String location;
     private String homePage;
-    List<Contact> contacts = new LinkedList<>();
+//    List<Contact> contacts = new LinkedList<>();
+  Map<ContactType, String> contacts = new EnumMap<>(ContactType.class); // Реализация Мапы, у к-ой ключи - Enum
     List<Section> sections = new LinkedList<>();
 
     public Resume(String uuid, String fullName, String location) {
@@ -30,8 +28,8 @@ public class Resume implements Comparable<Resume>{
         sections.add(section);
     }
 
-    public void addContacts(Contact contact) {
-        contacts.add(contact);
+    public void addContacts(ContactType contactType, String value) {
+        contacts.put(contactType, value);
     }
 
     public String getUuid() {
@@ -50,8 +48,8 @@ public class Resume implements Comparable<Resume>{
         return homePage;
     }
 
-    public List<Contact> getContacts() {
-        return contacts;
+    public  String getContact(ContactType type) {
+        return contacts.get(type);
     }
 
     public List<Section> getSections() {
@@ -68,10 +66,6 @@ public class Resume implements Comparable<Resume>{
 
     public void setHomePage(String homePage) {
         this.homePage = homePage;
-    }
-
-    public void setContacts(List<Contact> contacts) {
-        this.contacts = contacts;
     }
 
     public void setSections(List<Section> sections) {
@@ -93,8 +87,18 @@ public class Resume implements Comparable<Resume>{
         return uuid.hashCode();
     }
 
-    @Override
+//    @Override
     public int compareTo(Resume o) {
         return fullName.compareTo(o.fullName);
     }
+
+    // реализация без Мапы
+    /*private String getEmail(List<Contact> list) {
+        for (Contact c : list) {
+            if (c.getType() == ContactType.MAIL) {
+                return c.getValue();
+            }
+        }
+        return null;
+    }*/
 }

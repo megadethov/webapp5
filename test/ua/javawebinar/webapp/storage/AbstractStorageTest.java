@@ -5,7 +5,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import ua.javawebinar.webapp.WebAppException;
-import ua.javawebinar.webapp.model.Contact;
 import ua.javawebinar.webapp.model.ContactType;
 import ua.javawebinar.webapp.model.Resume;
 
@@ -46,11 +45,11 @@ public abstract class AbstractStorageTest {
     @Before
     public void before() {
         R1 = new Resume("Full Name1", "location1");
-        R1.addContacts(new Contact(ContactType.MAIL, "mail1@ya.ru"));
-        R1.addContacts(new Contact(ContactType.PHONE, "11111"));
+        R1.addContacts(ContactType.MAIL, "mail1@ya.ru");
+        R1.addContacts(ContactType.PHONE, "11111");
         R2 = new Resume("Full Name2", null);
-        R2.addContacts(new Contact(ContactType.SKYPE, "skype2"));
-        R2.addContacts(new Contact(ContactType.PHONE, "22222"));
+        R2.addContacts(ContactType.SKYPE, "skype2");
+        R2.addContacts(ContactType.PHONE, "22222");
         R3 = new Resume("Full Name3", null);
         storage.clear();
         storage.save(R3);
@@ -67,8 +66,8 @@ public abstract class AbstractStorageTest {
     @Test
     public void save() throws Exception {
         Resume R4 = new Resume("Full Name4", "location4");
-        R4.addContacts(new Contact(ContactType.MAIL, "mail4@ya.ru"));
-        R4.addContacts(new Contact(ContactType.PHONE, "44444"));
+        R4.addContacts(ContactType.MAIL, "mail4@ya.ru");
+        R4.addContacts(ContactType.PHONE, "44444");
         storage.save(R4);
         assertEquals(4, storage.size());
     }
