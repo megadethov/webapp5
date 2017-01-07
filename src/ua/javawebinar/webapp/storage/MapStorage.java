@@ -2,42 +2,50 @@ package ua.javawebinar.webapp.storage;
 
 import ua.javawebinar.webapp.model.Resume;
 
-import java.util.Collection;
+import java.util.*;
 
-// TODO: 06.01.2017 Implements MapStorage
-public abstract class MapStorage extends AbstractStorage {
+public class MapStorage extends AbstractStorage {
+
+    private Map<String, Resume> map = new HashMap<>();
+
     @Override
-    public void clear() {
-
+    protected void doClear() {
+        map.clear();
     }
 
     @Override
-    public void update(Resume resume) {
-
-    }
-
-    @Override
-    public Resume load(String uuid) {
-        return null;
-    }
-
-    @Override
-    public void delete(String uuid) {
-
-    }
-
-    @Override
-    public Collection<Resume> getAllSorted() {
-        return null;
-    }
-
-    @Override
-    public int size() {
-        return 0;
+    protected boolean exist(String uuid) {
+//        return map.get(uuid) != null; the same
+        return map.containsKey(uuid);
     }
 
     @Override
     protected void doSave(Resume resume) {
+        map.put(resume.getUuid(), resume);
+    }
 
+    @Override
+    protected void doUpdate(Resume resume) {
+        map.put(resume.getUuid(), resume);
+    }
+
+    @Override
+    protected Resume doLoad(String uuid) {
+        return map.get(uuid);
+    }
+
+    @Override
+    protected void doDelete(String uuid) {
+        map.remove(uuid);
+    }
+
+    @Override
+    protected List<Resume> doGetAll() {
+        return new ArrayList<>(map.values());
+    }
+
+    @Override
+    public int size() {
+        return map.size();
     }
 }
