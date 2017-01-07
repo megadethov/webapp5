@@ -101,4 +101,13 @@ public class Resume /*implements Comparable<Resume>*/{
         }
         return null;
     }*/
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Resume{");
+        sb.append("uuid='").append(uuid).append('\'');
+        sb.append(", fullName='").append(fullName).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }
