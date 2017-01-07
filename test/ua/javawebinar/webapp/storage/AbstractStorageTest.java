@@ -9,6 +9,10 @@ import ua.javawebinar.webapp.model.Contact;
 import ua.javawebinar.webapp.model.ContactType;
 import ua.javawebinar.webapp.model.Resume;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
@@ -69,11 +73,6 @@ public abstract class AbstractStorageTest {
         assertEquals(4, storage.size());
     }
 
-    @Test(expected = WebAppException.class)
-    public void saveExists() throws Exception {
-        storage.save(R3);
-    }
-
     @Test
     public void update() throws Exception {
         R2.setFullName("Update #2");
@@ -88,11 +87,6 @@ public abstract class AbstractStorageTest {
         assertEquals(true, R3.equals(storage.load(R3.getUuid())));
     }
 
-    @Test(expected = WebAppException.class)
-    public void deleteNonFound() throws Exception {
-        storage.load("dummy");
-    }
-
     @Test
     public void delete() throws Exception {
         storage.delete(R1.getUuid());
@@ -101,14 +95,38 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void getAllSorted() throws Exception {
-        Resume[] src = new Resume[]{R1, R2, R3};
-        assertArrayEquals(src, storage.getAllSorted().toArray()); // Здесь сравнивается содержимое массивов
-//        assertTrue(src.equals(storage.getAllSorted().toArray())); // false, проверка на совпадение расположения в памяти
+//        Resume[] src = new Resume[]{R1, R2, R3};
+//        assertArrayEquals(src, storage.getAllSorted().toArray()); // Здесь сравнивается содержимое массивов
+
+        Collection<Resume> src = new ArrayList<>(Arrays.asList(R1, R2, R3));
+        assertEquals(src, storage.getAllSorted());
     }
 
     @Test
     public void size() throws Exception {
         Assert.assertEquals(3, storage.size());
 
+    }
+
+    @Test(expected = WebAppException.class)
+    public void deleteNonFound() throws Exception {
+        storage.load("dummy");
+    }
+
+    @Test(expected = WebAppException.class)
+    public void saveExists() throws Exception {
+        storage.save(R3);
+    }
+
+    @Test(expected = WebAppException.class)
+    public void updateMissed() throws Exception {
+        Resume R4 = new Resume();
+        storage.update(R4);
+    }
+
+    @Test (expected = WebAppException.class)
+    public void loadMissed() throws Exception {
+        Resume R4 = new Resume();
+        storage.load(R4.getUuid());
     }
 }
