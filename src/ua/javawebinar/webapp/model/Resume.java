@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class Resume implements Comparable<Resume>{
-    private final String uuid;
+    private String uuid;
     private String fullName;
     private String location;
     private String homePage;
@@ -17,6 +17,9 @@ public class Resume implements Comparable<Resume>{
         this.uuid = uuid;
         this.fullName = fullName;
         this.location = location;
+    }
+
+    public Resume() {
     }
 
     public Resume(String fullName, String location) {

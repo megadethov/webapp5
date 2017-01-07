@@ -5,69 +5,49 @@ import ua.javawebinar.webapp.model.Resume;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.logging.Logger;
 
 //import java.util.logging.Level;
 
-public class ArrayStorage implements IStorage {
+public class ArrayStorage extends AbstractStorage {
 
     private static final int LIMIT = 100;
     private Resume[] array = new Resume[LIMIT];
     private int size = 0;
 
-    //    protected Logger logger = Logger.getLogger(this.getClass().getName()); // для базового класса с наследниками
-    private static Logger LOGGER = Logger.getLogger(ArrayStorage.class.getName()); // для конкретного класса без наследования
-
     @Override
-    public void clear() {
-        LOGGER.info("Delete all resumes");
+    public void doClear() {
         Arrays.fill(array, null);
         size = 0;
     }
 
     @Override
-    public void save(Resume resume) /*throws WebAppException*/ {
-        LOGGER.info("Save resume with uuid: " + resume.getUuid());
-        int idx = getIndex(resume.getUuid()); // ==-1 такого резюме в массиве нет
-        if (idx != -1) {
-           /* try {
-                throw new WebAppException("Resume " + resume.getUuid() + "already exists", resume);
-            } catch (WebAppException e) {
-                logger.log(Level.SEVERE, e.getMessage(), e);
-                throw new IllegalStateException(e);
-            }*/
-            throw new WebAppException("Resume " + resume.getUuid() + "already exists", resume);
-        }
-        array[size++] = resume;
+    protected boolean exist(String uuid) {
+        return getIndex(uuid) != -1;
     }
 
     @Override
-    public void update(Resume resume) {
-        LOGGER.info("Update resume with uuid " + resume.getUuid());
+    public void doUpdate(Resume resume) {
         int idx = getIndex(resume.getUuid());
-        if (idx == -1) {
-            throw new WebAppException("Resume " + resume.getUuid() + "not exists", resume);
-        }
         array[idx] = resume;
     }
 
     @Override
-    public Resume load(String uuid) {
-        LOGGER.info("Load resume with uuid " + uuid);
+    public Resume doLoad(String uuid) {
         int idx = getIndex(uuid);
-        if (idx == -1) {
-            throw new WebAppException("Resume " + uuid + " not exists");
-        }
         return array[idx];
     }
 
     @Override
-    public void delete(String uuid) {
-        LOGGER.info("Delete resume with uuid " + uuid);
+    public void doSave(Resume resume) {
+        int idx = getIndex(resume.getUuid()); // ==-1 такого резюме в массиве нет
+        array[size++] = resume;
+    }
+
+    @Override
+    public void doDelete(String uuid) {
         int idx = getIndex(uuid);
-        if (idx == -1) {
-            throw new WebAppException("Resume " + uuid + "not exists");
-        }
         if (idx != size) {
             System.arraycopy(array, idx + 1, array, idx, size - idx);
         }
@@ -75,8 +55,7 @@ public class ArrayStorage implements IStorage {
     }
 
     @Override
-    public Collection<Resume> getAllSorted() {
-        Arrays.sort(array, 0, size);
+    public List<Resume> doGetAll() {
         return Arrays.asList(Arrays.copyOf(array, size));
     }
 
