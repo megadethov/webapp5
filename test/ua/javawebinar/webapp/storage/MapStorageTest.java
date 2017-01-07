@@ -2,6 +2,7 @@ package ua.javawebinar.webapp.storage;
 
 public class MapStorageTest extends AbstractStorageTest {
     {
-        storage = new MapStorage();
+        // TODO: 07.01.2017 Uncomment this
+//        storage = new MapStorage();
     }
 }

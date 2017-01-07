@@ -3,6 +3,7 @@ package ua.javawebinar.webapp.storage;
 import ua.javawebinar.webapp.WebAppException;
 import ua.javawebinar.webapp.model.Resume;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -41,7 +42,7 @@ public class ArrayStorage extends AbstractStorage {
 
     @Override
     public void doSave(Resume resume) {
-        int idx = getIndex(resume.getUuid()); // ==-1 такого резюме в массиве нет
+       // int idx = getIndex(resume.getUuid()); // ==-1 такого резюме в массиве нет
         array[size++] = resume;
     }
 
@@ -56,7 +57,7 @@ public class ArrayStorage extends AbstractStorage {
 
     @Override
     public List<Resume> doGetAll() {
-        return Arrays.asList(Arrays.copyOf(array, size));
+        return new ArrayList<>(Arrays.asList(Arrays.copyOf(array, size)));
     }
 
     @Override
