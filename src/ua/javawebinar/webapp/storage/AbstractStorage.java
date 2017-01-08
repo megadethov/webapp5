@@ -55,10 +55,10 @@ public abstract class AbstractStorage<T> implements IStorage {
         if (!exist(context)) {
             throw new WebAppException("Resume " + uuid + " not exists");
         }
-        return doLoad(context, uuid);
+        return doLoad(context);
     }
 
-    protected abstract Resume doLoad(T context, String uuid);
+    protected abstract Resume doLoad(T context);
 
     @Override
     public void delete(String uuid) {

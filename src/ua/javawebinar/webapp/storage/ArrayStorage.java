@@ -55,7 +55,7 @@ public class ArrayStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    protected Resume doLoad(Integer context, String uuid) {
+    protected Resume doLoad(Integer context) {
         return array[context];
     }
 
