@@ -19,28 +19,28 @@ public class MapStorage extends AbstractStorage<String> {
     }
 
     @Override
-    protected boolean exist(String uuid) {
-        return map.containsKey(uuid);
+    protected boolean exist(String key) {
+        return map.containsKey(key);
     }
 
     @Override
-    protected void doSave(String uuid, Resume resume) {
-        map.put(uuid, resume);
+    protected void doSave(String key, Resume resume) {
+        map.put(key, resume);
     }
 
     @Override
-    protected void doUpdate(String uuid, Resume resume) {
-        map.put(uuid, resume);
+    protected void doUpdate(String key, Resume resume) {
+        map.put(key, resume);
     }
 
     @Override
-    protected Resume doLoad(String uuid) {
-        return map.get(uuid);
+    protected Resume doLoad(String key) {
+        return map.get(key);
     }
 
     @Override
-    protected void doDelete(String uuid) {
-        map.remove(uuid);
+    protected void doDelete(String key) {
+        map.remove(key);
     }
 
     @Override

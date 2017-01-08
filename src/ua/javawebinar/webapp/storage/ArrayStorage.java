@@ -40,29 +40,29 @@ public class ArrayStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    protected boolean exist(Integer context) {
-        return context != -1;
+    protected boolean exist(Integer index) {
+        return index != -1;
     }
 
     @Override
-    protected void doSave(Integer context, Resume resume) {
+    protected void doSave(Integer index, Resume resume) {
         array[size++] = resume;
     }
 
     @Override
-    protected void doUpdate(Integer context, Resume resume) {
-        array[context] = resume;
+    protected void doUpdate(Integer index, Resume resume) {
+        array[index] = resume;
     }
 
     @Override
-    protected Resume doLoad(Integer context) {
-        return array[context];
+    protected Resume doLoad(Integer index) {
+        return array[index];
     }
 
     @Override
-    protected void doDelete(Integer context) {
-        if (context != size - 1) {
-            System.arraycopy(array, context + 1, array, context, size - context);
+    protected void doDelete(Integer index) {
+        if (index != size - 1) {
+            System.arraycopy(array, index + 1, array, index, size - index);
         }
         array[--size] = null;
     }
