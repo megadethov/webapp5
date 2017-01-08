@@ -17,6 +17,7 @@ public class ArrayStorage extends AbstractStorage {
     private Resume[] array = new Resume[LIMIT];
     private int size = 0;
 
+
     @Override
     public void doClear() {
         Arrays.fill(array, null);
@@ -24,8 +25,8 @@ public class ArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean exist(String uuid) {
-        return getIndex(uuid) != -1;
+    protected int getContext(String uuid) {
+        return getIndex(uuid);
     }
 
     @Override
@@ -42,7 +43,7 @@ public class ArrayStorage extends AbstractStorage {
 
     @Override
     public void doSave(Resume resume) {
-       // int idx = getIndex(resume.getUuid()); // ==-1 такого резюме в массиве нет
+        // int idx = getIndex(resume.getUuid()); // ==-1 такого резюме в массиве нет
         array[size++] = resume;
     }
 

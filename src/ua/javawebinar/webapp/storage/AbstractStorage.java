@@ -9,7 +9,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Logger;
 
-public abstract class AbstractStorage implements IStorage {
+public abstract class AbstractStorage<T> implements IStorage {
     protected final Logger LOGGER = Logger.getLogger(this.getClass().getName()); // для базового класса с наследниками
 
     @Override
@@ -20,51 +20,57 @@ public abstract class AbstractStorage implements IStorage {
 
     protected abstract void doClear();
 
-    protected abstract boolean exist(String uuid);
+    protected abstract T getContext(String uuid);
+
+    protected abstract boolean exist(T context);
 
     @Override
     public void save(Resume resume) {
         LOGGER.info("Save resume with uuid: " + resume.getUuid());
-        if (exist(resume.getUuid())) {
+        T context = getContext(resume.getUuid());
+        if (exist(context)) {
             throw new WebAppException("Resume " + resume.getUuid() + "already exists", resume);
         }
-        doSave(resume);
+        doSave(context, resume);
     }
 
-    protected abstract void doSave(Resume resume);
+    protected abstract void doSave(T context, Resume resume);
 
     @Override
     public void update(Resume resume) {
         LOGGER.info("Update resume with uuid " + resume.getUuid());
-        if (!exist(resume.getUuid())) {
+        T context = getContext(resume.getUuid());
+        if (!exist(context)) {
             throw new WebAppException("Resume " + resume.getUuid() + "not exists", resume);
         }
-        doUpdate(resume);
+        doUpdate(context, resume);
     }
 
-    protected abstract void doUpdate(Resume resume);
+    protected abstract void doUpdate(T context, Resume resume);
 
     @Override
     public Resume load(String uuid) {
         LOGGER.info("Load resume with uuid " + uuid);
-        if (!exist(uuid)) {
+        T context = getContext(uuid);
+        if (!exist(context)) {
             throw new WebAppException("Resume " + uuid + " not exists");
         }
-        return doLoad(uuid);
+        return doLoad(context, uuid);
     }
 
-    protected abstract Resume doLoad(String uuid);
+    protected abstract Resume doLoad(T Context, String uuid);
 
     @Override
     public void delete(String uuid) {
         LOGGER.info("Delete resume with uuid " + uuid);
-        if (!exist(uuid)) {
+        T context = getContext(uuid);
+        if (!exist(context)) {
             throw new WebAppException("Resume " + uuid + "not exists");
         }
-        doDelete(uuid);
+        doDelete(context, uuid);
     }
 
-    protected abstract void doDelete(String uuid);
+    protected abstract void doDelete(T context, String uuid);
 
     @Override
     public Collection<Resume> getAllSorted() {
