@@ -10,6 +10,11 @@ public class Resume /*implements Comparable<Resume>*/ {
     Map<ContactType, String> contacts = new EnumMap<>(ContactType.class); // Реализация Мапы, у к-ой ключи - Enum
     Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
 
+    public static final Resume EMPTY;
+    static {
+        EMPTY = new Resume();
+    }
+
     public Resume(String uuid, String fullName, String location) {
         this.uuid = uuid;
         this.fullName = fullName;
