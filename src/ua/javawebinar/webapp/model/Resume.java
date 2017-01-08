@@ -2,14 +2,13 @@ package ua.javawebinar.webapp.model;
 
 import java.util.*;
 
-public class Resume /*implements Comparable<Resume>*/{
+public class Resume /*implements Comparable<Resume>*/ {
     private String uuid;
     private String fullName;
     private String location;
     private String homePage;
-//    List<Contact> contacts = new LinkedList<>();
-  Map<ContactType, String> contacts = new EnumMap<>(ContactType.class); // Реализация Мапы, у к-ой ключи - Enum
-    List<Section> sections = new LinkedList<>();
+    Map<ContactType, String> contacts = new EnumMap<>(ContactType.class); // Реализация Мапы, у к-ой ключи - Enum
+    Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
 
     public Resume(String uuid, String fullName, String location) {
         this.uuid = uuid;
@@ -24,8 +23,8 @@ public class Resume /*implements Comparable<Resume>*/{
         this(UUID.randomUUID().toString(), fullName, location);
     }
 
-    public void addSection(Section section) {
-        sections.add(section);
+    public void addSection(SectionType type, Section section) {
+        sections.put(type, section);
     }
 
     public void addContacts(ContactType contactType, String value) {
@@ -48,12 +47,12 @@ public class Resume /*implements Comparable<Resume>*/{
         return homePage;
     }
 
-    public  String getContact(ContactType type) {
+    public String getContact(ContactType type) {
         return contacts.get(type);
     }
 
-    public List<Section> getSections() {
-        return sections;
+    public Section getSections(SectionType type) {
+        return sections.get(type);
     }
 
     public void setFullName(String fullName) {
@@ -66,10 +65,6 @@ public class Resume /*implements Comparable<Resume>*/{
 
     public void setHomePage(String homePage) {
         this.homePage = homePage;
-    }
-
-    public void setSections(List<Section> sections) {
-        this.sections = sections;
     }
 
     @Override
@@ -87,7 +82,7 @@ public class Resume /*implements Comparable<Resume>*/{
         return uuid.hashCode();
     }
 
-//    @Override
+    //    @Override
     public int compareTo(Resume o) {
         return fullName.compareTo(o.fullName);
     }
