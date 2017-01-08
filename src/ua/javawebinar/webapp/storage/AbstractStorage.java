@@ -58,7 +58,7 @@ public abstract class AbstractStorage<T> implements IStorage {
         return doLoad(context, uuid);
     }
 
-    protected abstract Resume doLoad(T Context, String uuid);
+    protected abstract Resume doLoad(T context, String uuid);
 
     @Override
     public void delete(String uuid) {
@@ -67,10 +67,10 @@ public abstract class AbstractStorage<T> implements IStorage {
         if (!exist(context)) {
             throw new WebAppException("Resume " + uuid + "not exists");
         }
-        doDelete(context, uuid);
+        doDelete(context);
     }
 
-    protected abstract void doDelete(T context, String uuid);
+    protected abstract void doDelete(T context);
 
     @Override
     public Collection<Resume> getAllSorted() {

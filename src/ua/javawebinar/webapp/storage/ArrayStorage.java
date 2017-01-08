@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 //import java.util.logging.Level;
 
-public class ArrayStorage extends AbstractStorage {
+public class ArrayStorage extends AbstractStorage<Integer> {
 
     private static final int LIMIT = 100;
     private Resume[] array = new Resume[LIMIT];
@@ -24,34 +24,45 @@ public class ArrayStorage extends AbstractStorage {
         size = 0;
     }
 
+    // поиск Резюме:
+    // нет return -1
+    // есть return его индекс
     @Override
-    protected int getContext(String uuid) {
-        return getIndex(uuid);
+    protected Integer getContext(String uuid) {
+        for (int i = 0; i < LIMIT; i++) {
+            if (array[i] != null) {
+                if (array[i].getUuid().equals(uuid)) {
+                    return i;
+                }
+            }
+        }
+        return -1;
     }
 
     @Override
-    public void doUpdate(Resume resume) {
-        int idx = getIndex(resume.getUuid());
-        array[idx] = resume;
+    protected boolean exist(Integer context) {
+        return context != -1;
     }
 
     @Override
-    public Resume doLoad(String uuid) {
-        int idx = getIndex(uuid);
-        return array[idx];
-    }
-
-    @Override
-    public void doSave(Resume resume) {
-        // int idx = getIndex(resume.getUuid()); // ==-1 такого резюме в массиве нет
+    protected void doSave(Integer context, Resume resume) {
         array[size++] = resume;
     }
 
     @Override
-    public void doDelete(String uuid) {
-        int idx = getIndex(uuid);
-        if (idx != size) {
-            System.arraycopy(array, idx + 1, array, idx, size - idx);
+    protected void doUpdate(Integer context, Resume resume) {
+        array[context] = resume;
+    }
+
+    @Override
+    protected Resume doLoad(Integer context, String uuid) {
+        return array[context];
+    }
+
+    @Override
+    protected void doDelete(Integer context) {
+        if (context != size - 1) {
+            System.arraycopy(array, context + 1, array, context, size - context);
         }
         array[--size] = null;
     }
@@ -64,19 +75,5 @@ public class ArrayStorage extends AbstractStorage {
     @Override
     public int size() {
         return size;
-    }
-
-    // поиск Резюме:
-    // нет return -1
-    // есть return его индекс
-    private int getIndex(String uuid) {
-        for (int i = 0; i < LIMIT; i++) {
-            if (array[i] != null) {
-                if (array[i].getUuid().equals(uuid)) {
-                    return i;
-                }
-            }
-        }
-        return -1;
     }
 }
