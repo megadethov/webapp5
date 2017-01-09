@@ -1,8 +1,11 @@
 package ua.javawebinar.webapp.model;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Resume /*implements Comparable<Resume>*/ {
+public class Resume implements Serializable {
+    static final long serialVersionUID = 1L;
+
     private String uuid;
     private String fullName;
     private String location = "";

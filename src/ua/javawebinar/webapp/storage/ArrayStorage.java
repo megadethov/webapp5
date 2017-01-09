@@ -3,6 +3,7 @@ package ua.javawebinar.webapp.storage;
 import ua.javawebinar.webapp.WebAppException;
 import ua.javawebinar.webapp.model.Resume;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -11,7 +12,8 @@ import java.util.logging.Logger;
 
 //import java.util.logging.Level;
 
-public class ArrayStorage extends AbstractStorage<Integer> {
+public class ArrayStorage extends AbstractStorage<Integer> implements Serializable {
+    static final long serialVersionUID = 1L;
 
     private static final int LIMIT = 100;
     private Resume[] array = new Resume[LIMIT];
