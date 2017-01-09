@@ -22,11 +22,11 @@ public abstract class AbstractStorageTest {
 
     static {
        /* R1 = new Resume("Full Name1", "location1");
-        R1.addContacts(new Contact(ContactType.MAIL, "mail1@ya.ru"));
-        R1.addContacts(new Contact(ContactType.PHONE, "11111"));
+        R1.addContact(new Contact(ContactType.MAIL, "mail1@ya.ru"));
+        R1.addContact(new Contact(ContactType.PHONE, "11111"));
         R2 = new Resume("Full Name2", null);
-        R2.addContacts(new Contact(ContactType.SKYPE, "skype2"));
-        R2.addContacts(new Contact(ContactType.PHONE, "22222"));
+        R2.addContact(new Contact(ContactType.SKYPE, "skype2"));
+        R2.addContact(new Contact(ContactType.PHONE, "22222"));
         R3 = new Resume("Full Name3", null);*/
 
     }
@@ -34,22 +34,22 @@ public abstract class AbstractStorageTest {
     @BeforeClass // the same as static{}
     public static void beforeClass() {
        /* R1 = new Resume("Full Name1", "location1");
-        R1.addContacts(new Contact(ContactType.MAIL, "mail1@ya.ru"));
-        R1.addContacts(new Contact(ContactType.PHONE, "11111"));
+        R1.addContact(new Contact(ContactType.MAIL, "mail1@ya.ru"));
+        R1.addContact(new Contact(ContactType.PHONE, "11111"));
         R2 = new Resume("Full Name2", null);
-        R2.addContacts(new Contact(ContactType.SKYPE, "skype2"));
-        R2.addContacts(new Contact(ContactType.PHONE, "22222"));
+        R2.addContact(new Contact(ContactType.SKYPE, "skype2"));
+        R2.addContact(new Contact(ContactType.PHONE, "22222"));
         R3 = new Resume("Full Name3", null);*/
     }
 
     @Before
     public void before() {
         R1 = new Resume("Full Name1", "location1");
-        R1.addContacts(ContactType.MAIL, "mail1@ya.ru");
-        R1.addContacts(ContactType.PHONE, "11111");
+        R1.addContact(ContactType.MAIL, "mail1@ya.ru");
+        R1.addContact(ContactType.PHONE, "11111");
         R2 = new Resume("Full Name2", null);
-        R2.addContacts(ContactType.SKYPE, "skype2");
-        R2.addContacts(ContactType.PHONE, "22222");
+        R2.addContact(ContactType.SKYPE, "skype2");
+        R2.addContact(ContactType.PHONE, "22222");
         R3 = new Resume("Full Name3", null);
         storage.clear();
         storage.save(R3);
@@ -66,8 +66,8 @@ public abstract class AbstractStorageTest {
     @Test
     public void save() throws Exception {
         Resume R4 = new Resume("Full Name4", "location4");
-        R4.addContacts(ContactType.MAIL, "mail4@ya.ru");
-        R4.addContacts(ContactType.PHONE, "44444");
+        R4.addContact(ContactType.MAIL, "mail4@ya.ru");
+        R4.addContact(ContactType.PHONE, "44444");
         storage.save(R4);
         assertEquals(4, storage.size());
     }

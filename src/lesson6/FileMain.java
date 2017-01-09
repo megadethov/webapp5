@@ -17,7 +17,7 @@ public class FileMain {
             System.out.println(it.next());
         }Files*/
 
-       // var-2
+        // var-2
 //        Files.lines(Paths.get("c:\\VRayLog.txt"), StandardCharsets.UTF_8).forEach(System.out::println);
 
         // var-3
@@ -26,5 +26,8 @@ public class FileMain {
         while ((line = reader.readLine()) != null) {
             System.out.println(line);
         }
+
+        File dir = new File("c:\\temp");
+        int i = dir.listFiles().length;
     }
 }

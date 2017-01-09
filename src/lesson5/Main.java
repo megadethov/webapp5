@@ -16,11 +16,11 @@ public class Main {
         });
 
         Resume R1 = new Resume("Full Name1", "location1");
-        R1.addContacts(ContactType.MAIL, "mail1@ya.ru");
-        R1.addContacts(ContactType.PHONE, "11111");
+        R1.addContact(ContactType.MAIL, "mail1@ya.ru");
+        R1.addContact(ContactType.PHONE, "11111");
         Resume R2 = new Resume("Full Name2", null);
-        R2.addContacts(ContactType.SKYPE, "skype2");
-        R2.addContacts(ContactType.PHONE, "22222");
+        R2.addContact(ContactType.SKYPE, "skype2");
+        R2.addContact(ContactType.PHONE, "22222");
         Resume R3 = new Resume("Full Name3", null);
 
         List<Resume> resumes = new ArrayList<>(Arrays.asList(R1, R2, R3));

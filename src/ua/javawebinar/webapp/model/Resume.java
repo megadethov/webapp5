@@ -5,8 +5,8 @@ import java.util.*;
 public class Resume /*implements Comparable<Resume>*/ {
     private String uuid;
     private String fullName;
-    private String location;
-    private String homePage;
+    private String location = "";
+    private String homePage = "";
     Map<ContactType, String> contacts = new EnumMap<>(ContactType.class); // Реализация Мапы, у к-ой ключи - Enum
     Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
 
@@ -28,11 +28,19 @@ public class Resume /*implements Comparable<Resume>*/ {
         this(UUID.randomUUID().toString(), fullName, location);
     }
 
+    public Map<ContactType, String> getContacts() {
+        return contacts;
+    }
+
+    public Map<SectionType, Section> getSections() {
+        return sections;
+    }
+
     public void addSection(SectionType type, Section section) {
         sections.put(type, section);
     }
 
-    public void addContacts(ContactType contactType, String value) {
+    public void addContact(ContactType contactType, String value) {
         contacts.put(contactType, value);
     }
 
@@ -52,7 +60,7 @@ public class Resume /*implements Comparable<Resume>*/ {
         return homePage;
     }
 
-    public String getContact(ContactType type) {
+    public String getContacts(ContactType type) {
         return contacts.get(type);
     }
 
