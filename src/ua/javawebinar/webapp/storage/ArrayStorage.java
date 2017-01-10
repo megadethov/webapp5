@@ -12,8 +12,7 @@ import java.util.logging.Logger;
 
 //import java.util.logging.Level;
 
-public class ArrayStorage extends AbstractStorage<Integer> implements Serializable {
-    static final long serialVersionUID = 1L;
+public class ArrayStorage extends AbstractStorage<Integer> {
 
     private static final int LIMIT = 100;
     private Resume[] array = new Resume[LIMIT];

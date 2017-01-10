@@ -5,8 +5,7 @@ import ua.javawebinar.webapp.model.Resume;
 import java.io.Serializable;
 import java.util.*;
 
-public class MapStorage extends AbstractStorage<String> implements Serializable {
-    static final long serialVersionUID = 1L;
+public class MapStorage extends AbstractStorage<String> {
 
     private Map<String, Resume> map = new HashMap<>();
 

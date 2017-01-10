@@ -10,8 +10,7 @@ import java.io.*;
 import java.util.List;
 import java.util.Map;
 
-public abstract class FileStorage extends AbstractStorage<File> implements Serializable {
-    static final long serialVersionUID = 1L;
+public abstract class FileStorage extends AbstractStorage<File> {
     private File dir;
 
     public FileStorage(String path) {

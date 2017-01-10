@@ -1,12 +1,17 @@
 package ua.javawebinar.webapp.model;
 
-public enum  ContactType {
+import java.io.Serializable;
+
+public enum  ContactType implements Serializable {
+
     PHONE("Тел."),
     MOBILE("Мобильный"),
     HOME_PHONE("Доиашний тел."),
     SKYPE("Skype"),
     MAIL("Почта"),
     ICQ("ICQ");
+
+    static final long serialVersionUID = 1L;
 
     private String title;
 
