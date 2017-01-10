@@ -7,7 +7,7 @@ public class Resume implements Serializable {
     static final long serialVersionUID = 1L;
 
     private String uuid;
-    private String fullName;
+    private String fullName = "";
     private String location = "";
     private String homePage = "";
     Map<ContactType, String> contacts = new EnumMap<>(ContactType.class); // Реализация Мапы, у к-ой ключи - Enum
@@ -25,6 +25,10 @@ public class Resume implements Serializable {
     }
 
     public Resume() {
+    }
+
+    public Resume(String uuid) {
+        this.uuid = uuid;
     }
 
     public Resume(String fullName, String location) {

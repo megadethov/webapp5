@@ -21,17 +21,6 @@ public abstract class AbstractStorageTest {
 
     protected IStorage storage;
 
-    static {
-       /* R1 = new Resume("Full Name1", "location1");
-        R1.addContact(new Contact(ContactType.MAIL, "mail1@ya.ru"));
-        R1.addContact(new Contact(ContactType.PHONE, "11111"));
-        R2 = new Resume("Full Name2", null);
-        R2.addContact(new Contact(ContactType.SKYPE, "skype2"));
-        R2.addContact(new Contact(ContactType.PHONE, "22222"));
-        R3 = new Resume("Full Name3", null);*/
-
-    }
-
     @BeforeClass // the same as static{}
     public static void beforeClass() {
        /* R1 = new Resume("Full Name1", "location1");
@@ -57,9 +46,9 @@ public abstract class AbstractStorageTest {
         storage.save(R3);
         storage.save(R1);
         storage.save(R2);
-        R1.addObjective("Objective1");
-        R1.addMultiTextSection(SectionType.ACHIEVEMENT, "Achievement11", "Achievement12");
-   R1.addMultiTextSection(SectionType.QUALIFICATIONS, "Java", "SQL");
+//        R1.addObjective("Objective1");
+//        R1.addMultiTextSection(SectionType.ACHIEVEMENT, "Achievement11", "Achievement12");
+//        R1.addMultiTextSection(SectionType.QUALIFICATIONS, "Java", "SQL");
         // TODO: 10.01.2017 add EXPERIENCE and EDUCATION
     }
 
@@ -128,7 +117,7 @@ public abstract class AbstractStorageTest {
         storage.update(R4);
     }
 
-    @Test (expected = WebAppException.class)
+    @Test(expected = WebAppException.class)
     public void loadMissed() throws Exception {
         storage.load(R4.getUuid());
     }
