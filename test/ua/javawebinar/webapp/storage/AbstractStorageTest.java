@@ -16,7 +16,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 public abstract class AbstractStorageTest {
-    private /*static*/ Resume R1, R2, R3;
+    private /*static*/ Resume R1, R2, R3, R4;
 
     protected IStorage storage;
 
@@ -51,6 +51,7 @@ public abstract class AbstractStorageTest {
         R2.addContact(ContactType.SKYPE, "skype2");
         R2.addContact(ContactType.PHONE, "22222");
         R3 = new Resume("Full Name3", null);
+        R4 = new Resume("Full Name4", null);
         storage.clear();
         storage.save(R3);
         storage.save(R1);
@@ -119,13 +120,11 @@ public abstract class AbstractStorageTest {
 
     @Test(expected = WebAppException.class)
     public void updateMissed() throws Exception {
-        Resume R4 = new Resume();
         storage.update(R4);
     }
 
     @Test (expected = WebAppException.class)
     public void loadMissed() throws Exception {
-        Resume R4 = new Resume();
         storage.load(R4.getUuid());
     }
 }

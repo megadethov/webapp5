@@ -27,15 +27,13 @@ public class SerializeFileStorage extends FileStorage {
     }
 
     protected Resume read(File file) {
-        Resume resume = null;
         try (FileInputStream is = new FileInputStream(file);
              ObjectInputStream ois = new ObjectInputStream(is);) {
-          resume = (Resume) ois.readObject();
+            return (Resume) ois.readObject();
         } catch (IOException e) {
             throw new WebAppException("Unable to write file " + file.getAbsolutePath(), e);
         } catch (ClassNotFoundException e) {
             throw new WebAppException("Error read resume", e);
         }
-        return resume;
     }
 }
