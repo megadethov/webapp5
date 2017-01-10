@@ -47,6 +47,18 @@ public class Resume implements Serializable {
         contacts.put(contactType, value);
     }
 
+    public void addObjective(String value) {
+        addSection(SectionType.OBJECTIVE, new TextSection(value));
+    }
+
+    public void addMultiTextSection(SectionType type, String... values) {
+        addSection(type, new MultiTextSection(values));
+    }
+
+    public void addOrganizationSection(SectionType type, Organization... organizations) {
+        addSection(type, new OrganizationSection(organizations));
+    }
+
     public String getUuid() {
         return uuid;
     }

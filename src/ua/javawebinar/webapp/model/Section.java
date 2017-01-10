@@ -1,5 +1,8 @@
 package ua.javawebinar.webapp.model;
 
-public class Section {
+import java.io.Serializable;
+
+public class Section implements Serializable {
+    static final long serialVersionUID = 1L;
 
 }

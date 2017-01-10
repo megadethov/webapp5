@@ -7,6 +7,8 @@ import ua.javawebinar.webapp.model.Section;
 import ua.javawebinar.webapp.model.SectionType;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -69,8 +71,13 @@ public abstract class FileStorage extends AbstractStorage<File> {
 
     @Override
     protected List<Resume> doGetAll() {
-        // TODO: 09.01.2017 read all
-        return null;
+        File[] files = dir.listFiles();
+        if (files == null) return Collections.emptyList();
+        List<Resume> list = new ArrayList<>(files.length);
+        for (File file : files) {
+            list.add(read(file));
+        }
+        return list;
     }
 
     @Override
