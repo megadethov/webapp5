@@ -32,9 +32,13 @@ public class DataStreamFileStorage extends FileStorage {
                 dos.writeInt(entry.getKey().ordinal());
                 dos.writeUTF(entry.getValue());
             }
-            for (Map.Entry<SectionType, Section> entry : resume.getSections().entrySet()) {
-                dos.writeInt(entry.getKey().ordinal());
-                dos.writeUTF(entry.getValue().toString()); // TODO: 09.01.2017 check this
+            Map<SectionType, Section> sections = resume.getSections();
+            dos.writeInt(sections.size()); // кол-во секций в Резюме
+            for (Map.Entry<SectionType, Section> entry : sections.entrySet()) {
+                SectionType type = entry.getKey();
+                Section section = entry.getValue();
+                writeString(dos, type.name());
+                // TODO: 10.01.2017
             }
         } catch (IOException e) {
             throw new WebAppException("Unable to write file " + file.getAbsolutePath(), resume, e);
