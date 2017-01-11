@@ -6,9 +6,12 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import ua.javawebinar.webapp.WebAppException;
 import ua.javawebinar.webapp.model.ContactType;
+import ua.javawebinar.webapp.model.Organization;
 import ua.javawebinar.webapp.model.Resume;
 import ua.javawebinar.webapp.model.SectionType;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -45,14 +48,23 @@ public abstract class AbstractStorageTest {
         R1.addObjective("Objective1");
         R1.addMultiTextSection(SectionType.ACHIEVEMENT, "Achivement11", "Achivement12");
         R1.addMultiTextSection(SectionType.QUALIFICATIONS, "Java", "SQL");
+        R1.addObjective("Objective1");
+        R1.addMultiTextSection(SectionType.ACHIEVEMENT, "Achivment11", "Achivment12");
+        R1.addMultiTextSection(SectionType.QUALIFICATIONS, "Java", "SQL");
+//        R1.addOrganizationSection(SectionType.EXPERIENCE,
+//                new Organization("Organization11", null,
+//                        new Organization.Period(LocalDate.of(2005, Month.JANUARY, 1), Organization.Period.NOW, "position1", "content1"),
+//                        new Organization.Period(2001, Month.MARCH, 2005, Month.JANUARY, "position2", "content2")));
+//        R1.addOrganizationSection(SectionType.EDUCATION,
+//                new Organization("Institute", null,
+//                        new Organization.Period(1996, Month.JANUARY, 2000, Month.DECEMBER, "aspirant", null),
+//                        new Organization.Period(2001, Month.MARCH, 2005, Month.JANUARY, "student", "IT facultet")),
+//                new Organization("Organization12", "http://Organization12.ru"));
         storage.clear();
         storage.save(R3);
         storage.save(R1);
         storage.save(R2);
-//        R1.addObjective("Objective1");
-//        R1.addMultiTextSection(SectionType.ACHIEVEMENT, "Achievement11", "Achievement12");
-//        R1.addMultiTextSection(SectionType.QUALIFICATIONS, "Java", "SQL");
-        // TODO: 10.01.2017 add EXPERIENCE and EDUCATION
+
     }
 
     @Test
