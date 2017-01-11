@@ -6,10 +6,10 @@ import ua.javawebinar.webapp.utils.XmlParser;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
-public class XmlStorage extends FileStorage {
+public class XmlFileStorage extends FileStorage {
     private XmlParser xmlParser;
 
-    public XmlStorage(String path) {
+    public XmlFileStorage(String path) {
         super(path);
         xmlParser = new XmlParser(Resume.class, Organization.class, Link.class,
                 OrganizationSection.class, TextSection.class, MultiTextSection.class, Organization.Period.class);
