@@ -1,10 +1,13 @@
 package ua.javawebinar.webapp.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Organization implements Serializable {
     static final long serialVersionUID = 1L;
 
@@ -19,6 +22,7 @@ public class Organization implements Serializable {
         this.periods = periods;
     }
 
+    @XmlAccessorType(XmlAccessType.FIELD)
     public static class Period implements Serializable { // static - nested, no static - inner
         static final long serialVersionUID = 1L;
         public static final LocalDate NOW = LocalDate.of(3000, 1, 1);
