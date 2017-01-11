@@ -1,5 +1,6 @@
 package ua.javawebinar.webapp.storage;
 
+import com.google.gson.GsonBuilder;
 import ua.javawebinar.webapp.model.*;
 import ua.javawebinar.webapp.utils.XmlParser;
 
