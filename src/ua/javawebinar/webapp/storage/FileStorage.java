@@ -50,7 +50,25 @@ public abstract class FileStorage extends AbstractStorage<File> {
         write(file, resume);
     }
 
-    protected abstract void write(File file, Resume resume);
+    protected void write(File file, Resume r) {
+        try {
+            write(new FileOutputStream(file), r);
+        } catch (IOException e) {
+            throw new WebAppException("Unable to write file " + file.getAbsolutePath(), r, e);
+        }
+    }
+
+    protected Resume read(File file) {
+        try {
+            return read(new FileInputStream(file));
+        } catch (IOException e) {
+            throw new WebAppException("Unable to read file " + file.getAbsolutePath(), e);
+        }
+    }
+
+    protected abstract void write(OutputStream os, Resume r) throws IOException;
+
+    protected abstract Resume read(InputStream is) throws IOException;
 
     @Override
     protected void doUpdate(File file, Resume resume) {
@@ -61,8 +79,6 @@ public abstract class FileStorage extends AbstractStorage<File> {
     protected Resume doLoad(File file) {
         return read(file);
     }
-
-    protected abstract Resume read(File file);
 
     @Override
     protected void doDelete(File file) {

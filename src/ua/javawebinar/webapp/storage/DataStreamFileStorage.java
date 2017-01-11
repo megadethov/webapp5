@@ -16,12 +16,11 @@ public class DataStreamFileStorage extends FileStorage {
         super(path);
     }
 
-    protected void write(File file, Resume resume) {
-        try (
-                FileOutputStream fos = new FileOutputStream(file);
-                DataOutputStream dos = new DataOutputStream(fos);
-        ) {
+    @Override
+    protected void write(OutputStream os, Resume resume) throws IOException {
+        try (final DataOutputStream dos = new DataOutputStream(os);) {
 
+            writeString(dos, resume.getUuid());
             writeString(dos, resume.getFullName());
             writeString(dos, resume.getLocation());
             writeString(dos, resume.getHomePage());
@@ -55,16 +54,16 @@ public class DataStreamFileStorage extends FileStorage {
                 }
 
             }
-        } catch (IOException e) {
-            throw new WebAppException("Unable to write file " + file.getAbsolutePath(), resume, e);
         }
     }
 
 
-    protected Resume read(File file) {
-        Resume r = new Resume(file.getName()); // Uuid = имя файла
-        try (FileInputStream is = new FileInputStream(file);
-             DataInputStream dis = new DataInputStream(is);) {
+    @Override
+    protected Resume read(InputStream is) throws IOException {
+        Resume r = new Resume();
+        try (DataInputStream dis = new DataInputStream(is);) {
+
+            r.setUuid(readString(dis));
             r.setFullName(readString(dis));
             r.setLocation(readString(dis));
             r.setHomePage(readString(dis));
@@ -90,11 +89,7 @@ public class DataStreamFileStorage extends FileStorage {
                 }
             }
             return r;
-        } catch (IOException e) {
-            throw new WebAppException("Unable to write file " + file.getAbsolutePath(), e);
         }
-
-
     }
 
     private void writeString(DataOutputStream dos, String str) throws IOException {

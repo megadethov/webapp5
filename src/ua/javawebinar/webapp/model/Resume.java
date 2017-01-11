@@ -99,6 +99,10 @@ public class Resume implements Serializable {
         this.homePage = homePage;
     }
 
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
