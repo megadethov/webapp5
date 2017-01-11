@@ -42,6 +42,9 @@ public abstract class AbstractStorageTest {
         R2.addContact(ContactType.PHONE, "22222");
         R3 = new Resume("Full Name3", null);
         R4 = new Resume("Full Name4", null);
+        R1.addObjective("Objective1");
+        R1.addMultiTextSection(SectionType.ACHIEVEMENT, "Achivement11", "Achivement12");
+        R1.addMultiTextSection(SectionType.QUALIFICATIONS, "Java", "SQL");
         storage.clear();
         storage.save(R3);
         storage.save(R1);

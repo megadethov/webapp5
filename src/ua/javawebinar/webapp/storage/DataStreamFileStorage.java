@@ -4,6 +4,7 @@ import ua.javawebinar.webapp.WebAppException;
 import ua.javawebinar.webapp.model.*;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -27,12 +28,9 @@ public class DataStreamFileStorage extends FileStorage {
 
             Map<ContactType, String> contacts = resume.getContacts();
 
-            writeCollection(dos, contacts.entrySet(), new ElementWriter<Map.Entry<ContactType, String>>() {
-                @Override
-                public void write(Map.Entry<ContactType, String> entry) throws IOException {
-                    dos.writeInt(entry.getKey().ordinal());
-                    dos.writeUTF(entry.getValue());
-                }
+            writeCollection(dos, contacts.entrySet(), entry -> {
+                dos.writeInt(entry.getKey().ordinal());
+                dos.writeUTF(entry.getValue());
             });
 
             Map<SectionType, Section> sections = resume.getSections();
@@ -47,12 +45,7 @@ public class DataStreamFileStorage extends FileStorage {
                         break;
                     case ACHIEVEMENT:
                     case QUALIFICATIONS:
-                        writeCollection(dos, ((MultiTextSection) section).getValues(), new ElementWriter<String>() {
-                            @Override
-                            public void write(String value) throws IOException {
-                                writeString(dos, value);
-                            }
-                        });
+                        writeCollection(dos, ((MultiTextSection) section).getValues(), value -> writeString(dos, value));
                         break;
                     case EDUCATION:
                     case EXPERIENCE:
@@ -79,12 +72,29 @@ public class DataStreamFileStorage extends FileStorage {
             for (int i = 0; i < contactSize; i++) {
                 r.addContact(ContactType.values[dis.readInt()], readString(dis));
             }
-// TODO: 09.01.2017 sections implementations
+            final int sectionsSize = dis.readInt();
+            for (int i = 0; i < sectionsSize; i++) {
+                SectionType sectionType = SectionType.valueOf(readString(dis));
+                switch (sectionType) {
+                    case OBJECTIVE:
+                        r.addObjective(readString(dis));
+                        break;
+                    case ACHIEVEMENT:
+                    case QUALIFICATIONS:
+                        r.addSection(sectionType, new MultiTextSection(readList(dis, () -> readString(dis))));
+                        break;
+                    case EDUCATION:
+                    case EXPERIENCE:
+                        // TODO: 11.01.2017
+                        break;
+                }
+            }
+            return r;
         } catch (IOException e) {
             throw new WebAppException("Unable to write file " + file.getAbsolutePath(), e);
         }
 
-        return r;
+
     }
 
     private void writeString(DataOutputStream dos, String str) throws IOException {
@@ -99,6 +109,19 @@ public class DataStreamFileStorage extends FileStorage {
     // Pattern - Strategy
     private interface ElementWriter<T> {
         void write(T t) throws IOException;
+    }
+
+    private interface ElementReader<T> {
+        T read() throws IOException;
+    }
+
+    private <T> List<T> readList(DataInputStream dis, ElementReader<T> reader) throws IOException {
+        int size = dis.readInt();
+        List<T> list = new ArrayList<T>(size);
+        for (int i = 0; i < size; i++) {
+            list.add(reader.read());
+        }
+        return list;
     }
 
     private <T> void writeCollection(DataOutputStream dos, Collection<T> collection, ElementWriter<T> writer) throws IOException {
