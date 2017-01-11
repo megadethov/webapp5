@@ -23,9 +23,11 @@ public class MyTraining {
         employees.put(Uuid.NUMBER_4, employee4);
         employees.put(Uuid.NUMBER_5, employee5);
 
-        writeObj(employees);
+//        writeObj(employees);
 
-        readObject();
+//        readObject();
+
+        System.out.println(Uuid.NUMBER_1 + " num = " + Uuid.NUMBER_2.ordinal() + "        " + Uuid.NUMBER_5.getNum());
 
 
     }
@@ -81,9 +83,19 @@ class Employee implements Serializable {
 }
 
 enum Uuid {
-    NUMBER_1,
-    NUMBER_2,
-    NUMBER_3,
-    NUMBER_4,
-    NUMBER_5,
+    NUMBER_1(1),
+    NUMBER_2(2),
+    NUMBER_3(3),
+    NUMBER_4(4),
+    NUMBER_5(5);
+
+    int num;
+
+    Uuid(int num) {
+        this.num = num;
+    }
+
+    public int getNum() {
+        return num;
+    }
 }

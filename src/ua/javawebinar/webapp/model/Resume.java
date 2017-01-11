@@ -119,16 +119,6 @@ public class Resume implements Serializable {
         return fullName.compareTo(o.fullName);
     }
 
-    // реализация без Мапы
-    /*private String getEmail(List<Contact> list) {
-        for (Contact c : list) {
-            if (c.getType() == ContactType.MAIL) {
-                return c.getValue();
-            }
-        }
-        return null;
-    }*/
-
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Resume{");
