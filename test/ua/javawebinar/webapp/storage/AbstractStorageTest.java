@@ -40,11 +40,11 @@ public abstract class AbstractStorageTest {
         R1 = new Resume("Full Name1", "location1");
         R1.addContact(ContactType.MAIL, "mail1@ya.ru");
         R1.addContact(ContactType.PHONE, "11111");
-        R2 = new Resume("Full Name2", null);
+        R2 = new Resume("Full Name2", "location2");
         R2.addContact(ContactType.SKYPE, "skype2");
         R2.addContact(ContactType.PHONE, "22222");
-        R3 = new Resume("Full Name3", null);
-        R4 = new Resume("Full Name4", null);
+        R3 = new Resume("Full Name3", "");
+        R4 = new Resume("Full Name4", "");
         R1.addObjective("Objective1");
         R1.addMultiTextSection(SectionType.ACHIEVEMENT, "Achivement11", "Achivement12");
         R1.addMultiTextSection(SectionType.QUALIFICATIONS, "Java", "SQL");

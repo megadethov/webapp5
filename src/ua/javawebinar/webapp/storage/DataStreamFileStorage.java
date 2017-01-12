@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public class DataStreamFileStorage extends FileStorage {
-    private static final String NULL = "null";
+//    private static final String NULL = "null";
 
     public DataStreamFileStorage(String path) {
         super(path);
@@ -93,12 +93,14 @@ public class DataStreamFileStorage extends FileStorage {
     }
 
     private void writeString(DataOutputStream dos, String str) throws IOException {
-        dos.writeUTF(str == null ? NULL : str);
+//        dos.writeUTF(str == null ? NULL : str);
+        dos.writeUTF(str);
     }
 
     private String readString(DataInputStream dis) throws IOException {
         String str = dis.readUTF();
-        return str.equals(NULL) ? null : str;
+//        return str.equals(NULL) ? null : str;
+        return str;
     }
 
     // Pattern - Strategy
