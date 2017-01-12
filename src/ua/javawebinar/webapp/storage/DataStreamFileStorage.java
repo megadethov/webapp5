@@ -4,10 +4,11 @@ import ua.javawebinar.webapp.WebAppException;
 import ua.javawebinar.webapp.model.*;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.*;
+
+import static javafx.scene.input.KeyCode.T;
 
 public class DataStreamFileStorage extends FileStorage {
 //    private static final String NULL = "null";
@@ -18,13 +19,11 @@ public class DataStreamFileStorage extends FileStorage {
 
     @Override
     protected void write(OutputStream os, Resume resume) throws IOException {
-        try (final DataOutputStream dos = new DataOutputStream(os);) {
-
-            writeString(dos, resume.getUuid());
-            writeString(dos, resume.getFullName());
-            writeString(dos, resume.getLocation());
-            writeString(dos, resume.getHomePage());
-
+        try (final DataOutputStream dos = new DataOutputStream(os)) {
+            dos.writeUTF(resume.getUuid());
+            dos.writeUTF(resume.getFullName());
+            dos.writeUTF(resume.getLocation());
+            dos.writeUTF(resume.getHomePage());
             Map<ContactType, String> contacts = resume.getContacts();
 
             writeCollection(dos, contacts.entrySet(), entry -> {
@@ -33,58 +32,66 @@ public class DataStreamFileStorage extends FileStorage {
             });
 
             Map<SectionType, Section> sections = resume.getSections();
-            dos.writeInt(sections.size()); // кол-во секций в Резюме
+            dos.writeInt(sections.size());
             for (Map.Entry<SectionType, Section> entry : sections.entrySet()) {
                 SectionType type = entry.getKey();
                 Section section = entry.getValue();
-                writeString(dos, type.name());
+                dos.writeUTF(type.name());
                 switch (type) {
                     case OBJECTIVE:
-                        writeString(dos, ((TextSection) section).getValue());
+                        dos.writeUTF(((TextSection) section).getValue());
                         break;
                     case ACHIEVEMENT:
                     case QUALIFICATIONS:
-                        writeCollection(dos, ((MultiTextSection) section).getValues(), value -> writeString(dos, value));
+                        writeCollection(dos, ((MultiTextSection) section).getValues(), dos::writeUTF);
                         break;
                     case EDUCATION:
                     case EXPERIENCE:
-                        // TODO: 10.01.2017 implements
+                        writeCollection(dos, ((OrganizationSection) section).getValues(), org -> {
+                            dos.writeUTF(org.getLink().getName());
+                            dos.writeUTF(org.getLink().getUrl());
+                            writeCollection(dos, org.getPeriods(), period -> {
+                                DataStreamFileStorage.this.writeLocalDate(dos, period.getStartDate());
+                                DataStreamFileStorage.this.writeLocalDate(dos, period.getEndDate());
+                                dos.writeUTF(period.getPosition());
+                                dos.writeUTF(period.getContent());
+                            });
+                        });
                         break;
-
                 }
-
             }
         }
     }
 
-
     @Override
     protected Resume read(InputStream is) throws IOException {
         Resume r = new Resume();
-        try (DataInputStream dis = new DataInputStream(is);) {
-
-            r.setUuid(readString(dis));
-            r.setFullName(readString(dis));
-            r.setLocation(readString(dis));
-            r.setHomePage(readString(dis));
-            int contactSize = dis.readInt();
-            for (int i = 0; i < contactSize; i++) {
-                r.addContact(ContactType.values[dis.readInt()], readString(dis));
+        try (DataInputStream dis = new DataInputStream(is)) {
+            r.setUuid(dis.readUTF());
+            r.setFullName(dis.readUTF());
+            r.setLocation(dis.readUTF());
+            r.setHomePage(dis.readUTF());
+            int contactsSize = dis.readInt();
+            for (int i = 0; i < contactsSize; i++) {
+                r.addContact(ContactType.values[dis.readInt()], dis.readUTF());
             }
             final int sectionsSize = dis.readInt();
             for (int i = 0; i < sectionsSize; i++) {
-                SectionType sectionType = SectionType.valueOf(readString(dis));
+                SectionType sectionType = SectionType.valueOf(dis.readUTF());
                 switch (sectionType) {
                     case OBJECTIVE:
-                        r.addObjective(readString(dis));
+                        r.addObjective(dis.readUTF());
                         break;
                     case ACHIEVEMENT:
                     case QUALIFICATIONS:
-                        r.addSection(sectionType, new MultiTextSection(readList(dis, () -> readString(dis))));
+                        r.addSection(sectionType,
+                                new MultiTextSection(readList(dis, dis::readUTF)));
                         break;
                     case EDUCATION:
                     case EXPERIENCE:
-                        // TODO: 11.01.2017
+                        r.addSection(sectionType,
+                                new OrganizationSection(readList(dis, () -> new Organization(new Link(dis.readUTF(), dis.readUTF()),
+                                        readList(dis, () -> new Organization.Period(readLocalDate(dis), readLocalDate(dis), dis.readUTF(), dis.readUTF()))))));
                         break;
                 }
             }
@@ -92,18 +99,16 @@ public class DataStreamFileStorage extends FileStorage {
         }
     }
 
-    private void writeString(DataOutputStream dos, String str) throws IOException {
-//        dos.writeUTF(str == null ? NULL : str);
-        dos.writeUTF(str);
+    private void writeLocalDate(DataOutputStream dos, LocalDate ld) throws IOException {
+        Objects.requireNonNull(ld, "LocalDate cannot be null, use Period.NOW");
+        dos.writeInt(ld.getYear());
+        dos.writeUTF(ld.getMonth().name());
     }
 
-    private String readString(DataInputStream dis) throws IOException {
-        String str = dis.readUTF();
-//        return str.equals(NULL) ? null : str;
-        return str;
+    private LocalDate readLocalDate(DataInputStream dis) throws IOException {
+        return LocalDate.of(dis.readInt(), Month.valueOf(dis.readUTF()), 1);
     }
 
-    // Pattern - Strategy
     private interface ElementWriter<T> {
         void write(T t) throws IOException;
     }
@@ -114,7 +119,7 @@ public class DataStreamFileStorage extends FileStorage {
 
     private <T> List<T> readList(DataInputStream dis, ElementReader<T> reader) throws IOException {
         int size = dis.readInt();
-        List<T> list = new ArrayList<T>(size);
+        List<T> list = new ArrayList<>(size);
         for (int i = 0; i < size; i++) {
             list.add(reader.read());
         }

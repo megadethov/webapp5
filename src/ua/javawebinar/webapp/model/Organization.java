@@ -1,20 +1,30 @@
 package ua.javawebinar.webapp.model;
 
+import ua.javawebinar.webapp.utils.LocalDateAdapter;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Organization implements Serializable {
     static final long serialVersionUID = 1L;
 
-    private Link link;
-    private List<Period> periods;
+    private Link link = Link.EMPTY;
+    private List<Period> periods = new LinkedList<>();
 
     public Organization() {
+    }
+
+    public Organization(String name, String url, Period... periods) {
+        this(new Link(name, url), new LinkedList<>(Arrays.asList(periods)));
     }
 
     public Organization(Link link, List<Period> periods) {
@@ -22,14 +32,28 @@ public class Organization implements Serializable {
         this.periods = periods;
     }
 
+    public Link getLink() {
+        return link;
+    }
+
+    public List<Period> getPeriods() {
+        return periods;
+    }
+
     @XmlAccessorType(XmlAccessType.FIELD)
-    public static class Period implements Serializable { // static - nested, no static - inner
+    public static class Period implements Serializable {
         static final long serialVersionUID = 1L;
+
         public static final LocalDate NOW = LocalDate.of(3000, 1, 1);
-        private LocalDate startDates;
-        private LocalDate sendDates;
+
+        @XmlJavaTypeAdapter(LocalDateAdapter.class)
+        private LocalDate startDate = NOW;
+
+        @XmlJavaTypeAdapter(LocalDateAdapter.class)
+        private LocalDate endDate;
+
         private String position;
-        private String content;
+        private String content = "";
 
         public Period() {
         }
@@ -38,12 +62,81 @@ public class Organization implements Serializable {
             this(LocalDate.of(startYear, startMonth, 1), LocalDate.of(endYear, endMonth, 1), position, content);
         }
 
-        public Period(LocalDate startDates, LocalDate sendDates, String position, String content) {
-            this.startDates = startDates;
-            this.sendDates = sendDates;
+        public Period(LocalDate startDate, LocalDate endDate, String position, String content) {
+            Objects.requireNonNull(startDate, "startDate is null");
+            Objects.requireNonNull(startDate, "position is null");
+            this.startDate = startDate;
+            this.endDate = endDate == null ? NOW : endDate;
             this.position = position;
-            this.content = content;
-//            link.getName(); // из статика нет доступа к полям внешнего класса
+            this.content = content == null ? "" : content;
         }
+
+        public LocalDate getStartDate() {
+            return startDate;
+        }
+
+        public LocalDate getEndDate() {
+            return endDate;
+        }
+
+        public String getPosition() {
+            return position;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(startDate, endDate, position, content);
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (obj == null || getClass() != obj.getClass()) {
+                return false;
+            }
+            final Period other = (Period) obj;
+            return Objects.equals(this.startDate, other.startDate) && Objects.equals(this.endDate, other.endDate) && Objects.equals(this.position, other.position) && Objects.equals(this.content, other.content);
+        }
+
+        @Override
+        public String toString() {
+            return "Period{" +
+                    "startDate=" + startDate +
+                    ", endDate=" + endDate +
+                    ", position='" + position + '\'' +
+                    ", content='" + content + '\'' +
+                    '}';
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(link, periods);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        final Organization other = (Organization) obj;
+        return Objects.equals(this.link, other.link) && Objects.equals(this.periods, other.periods);
+    }
+
+    @Override
+    public String toString() {
+        return "Organization{" +
+                "link=" + link +
+                ", periods=" + periods +
+                '}';
     }
 }
