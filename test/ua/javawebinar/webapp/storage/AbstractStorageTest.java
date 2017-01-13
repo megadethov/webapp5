@@ -20,6 +20,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 public abstract class AbstractStorageTest {
+    public static final String FILE_STORAGE = "./file_storage";
     private /*static*/ Resume R1, R2, R3, R4;
 
     protected IStorage storage;
@@ -51,15 +52,15 @@ public abstract class AbstractStorageTest {
         R1.addObjective("Objective1");
         R1.addMultiTextSection(SectionType.ACHIEVEMENT, "Achivment11", "Achivment12");
         R1.addMultiTextSection(SectionType.QUALIFICATIONS, "Java", "SQL");
-//        R1.addOrganizationSection(SectionType.EXPERIENCE,
-//                new Organization("Organization11", null,
-//                        new Organization.Period(LocalDate.of(2005, Month.JANUARY, 1), Organization.Period.NOW, "position1", "content1"),
-//                        new Organization.Period(2001, Month.MARCH, 2005, Month.JANUARY, "position2", "content2")));
-//        R1.addOrganizationSection(SectionType.EDUCATION,
-//                new Organization("Institute", null,
-//                        new Organization.Period(1996, Month.JANUARY, 2000, Month.DECEMBER, "aspirant", null),
-//                        new Organization.Period(2001, Month.MARCH, 2005, Month.JANUARY, "student", "IT facultet")),
-//                new Organization("Organization12", "http://Organization12.ru"));
+        R1.addOrganizationSection(SectionType.EXPERIENCE,
+                new Organization("Organization11", "url11",
+                        new Organization.Period(LocalDate.of(2005, Month.JANUARY, 1), Organization.Period.NOW, "position1", "content1"),
+                        new Organization.Period(2001, Month.MARCH, 2005, Month.JANUARY, "position2", "content2")));
+        R1.addOrganizationSection(SectionType.EDUCATION,
+                new Organization("Institute", "url12",
+                        new Organization.Period(1996, Month.JANUARY, 2000, Month.DECEMBER, "aspirant", null),
+                        new Organization.Period(2001, Month.MARCH, 2005, Month.JANUARY, "student", "IT facultet")),
+                new Organization("Organization12", "http://Organization12.ru"));
         storage.clear();
         storage.save(R3);
         storage.save(R1);
