@@ -3,6 +3,7 @@ package ua.javawebinar.webapp.model;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import java.io.Serializable;
+import java.util.Objects;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Link implements Serializable {
@@ -14,8 +15,9 @@ public class Link implements Serializable {
     private final String url;
 
     public Link(String name, String url) {
+        Objects.requireNonNull(name, "name is null");
         this.name = name;
-        this.url = url;
+        this.url = url == null ? "" : url;
     }
 
     // Конструктор копирования (пердпочтительнее, чем clone())
