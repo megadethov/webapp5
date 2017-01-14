@@ -1,6 +1,6 @@
 package ua.javawebinar.webapp.utils;
 
-import ua.javawebinar.webapp.WebAppException;
+ import ua.javawebinar.webapp.WebAppException;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
