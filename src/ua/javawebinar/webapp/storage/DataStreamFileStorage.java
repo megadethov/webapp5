@@ -1,14 +1,11 @@
 package ua.javawebinar.webapp.storage;
 
-import ua.javawebinar.webapp.WebAppException;
 import ua.javawebinar.webapp.model.*;
 
 import java.io.*;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.*;
-
-import static javafx.scene.input.KeyCode.T;
 
 public class DataStreamFileStorage extends FileStorage {
 //    private static final String NULL = "null";
@@ -24,14 +21,14 @@ public class DataStreamFileStorage extends FileStorage {
             dos.writeUTF(resume.getFullName());
             dos.writeUTF(resume.getLocation());
             dos.writeUTF(resume.getHomePage());
-            Map<ContactType, String> contacts = resume.getContacts();
+            Map<ContactType, String> contacts = resume.getContact();
 
             writeCollection(dos, contacts.entrySet(), entry -> {
                 dos.writeInt(entry.getKey().ordinal());
                 dos.writeUTF(entry.getValue());
             });
 
-            Map<SectionType, Section> sections = resume.getSections();
+            Map<SectionType, Section> sections = resume.getSection();
             dos.writeInt(sections.size());
             for (Map.Entry<SectionType, Section> entry : sections.entrySet()) {
                 SectionType type = entry.getKey();

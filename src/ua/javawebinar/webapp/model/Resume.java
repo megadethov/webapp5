@@ -43,11 +43,11 @@ public class Resume implements Serializable {
         this(UUID.randomUUID().toString(), fullName, location);
     }
 
-    public Map<ContactType, String> getContacts() {
+    public Map<ContactType, String> getContact() {
         return contacts;
     }
 
-    public Map<SectionType, Section> getSections() {
+    public Map<SectionType, Section> getSection() {
         return sections;
     }
 
@@ -87,11 +87,11 @@ public class Resume implements Serializable {
         return homePage;
     }
 
-    public String getContacts(ContactType type) {
+    public String getContact(ContactType type) {
         return contacts.get(type);
     }
 
-    public Section getSections(SectionType type) {
+    public Section getSection(SectionType type) {
         return sections.get(type);
     }
 
